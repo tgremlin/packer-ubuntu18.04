@@ -12,6 +12,8 @@ workflows:
             - Slack
       - build-base:
           context: Slack
+          requires:
+            - validate
       - hold-build-base:
           context: Slack
           type: approval
