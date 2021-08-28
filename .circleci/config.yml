@@ -27,7 +27,7 @@ jobs:
   validate:
     working_directory: ~/project
     docker:
-      -image: hashicorp/packer:light
+      - image: hashicorp/packer:light
     steps:
       - checkout:
           path: ~/project
