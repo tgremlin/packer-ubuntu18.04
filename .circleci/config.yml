@@ -44,8 +44,6 @@ jobs:
             packer init aws-ubuntu.pkr.hcl
             packer fmt aws-ubuntu.pkr.hcl
             packer validate aws-ubuntu.pkr.hcl
-            pwd
-            ls -a
       - persist_to_workspace:
           root: .
           paths:
@@ -66,8 +64,7 @@ jobs:
       - run:
           name: Build Base
           command: |
-            pwd
-            ls -a
+            packer init aws-ubuntu.pkr.hcl
             packer build aws-ubuntu.pkr.hcl
       - slack/notify:
           event: fail
