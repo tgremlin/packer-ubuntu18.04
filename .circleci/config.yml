@@ -10,20 +10,19 @@ workflows:
           context:
             - AWS
             - Slack
-      - build-base:
-          context: 
-            - Slack
-            - AWS
-          requires:
-            - validate
       - hold-build-base:
           context: Slack
           type: approval
           requires:
             - validate
-            - build-base
       - slack/on-hold:
           mentions: $SLACK_MENTION
+          requires:
+            - hold-build-base
+      - build-base:
+          context:
+            - AWS
+            - Slack
           requires:
             - hold-build-base
 
@@ -69,6 +68,7 @@ jobs:
           command: |
             packer init aws-ubuntu.pkr.hcl
             packer build aws-ubuntu.pkr.hcl
+            packer output packer-manifest.json
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
