@@ -43,7 +43,7 @@ jobs:
             packer validate aws-ubuntu.pkr.hcl
       - run:
           name: De-Register existing AMI image
-          command: aws ec2 deregister-image --image-id ami-0cc77a21e59868a1a
+          command: aws ec2 deregister-image --image-id ami-07df339ad4f528bf6
       - persist_to_workspace:
           root: .
           paths:
