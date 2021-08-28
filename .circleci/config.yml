@@ -28,7 +28,7 @@ jobs:
   validate:
     working_directory: ~/project
     docker:
-      - image: hashicorp/packer:light
+      - image: tgremlin82/packer_aws:1.0
     steps:
       - checkout:
           path: ~/project
@@ -57,7 +57,7 @@ jobs:
   build-base:
     working_directory: ~/project
     docker:
-      - image: hashicorp/packer:light
+      - image: tgremlin82/packer_aws:1.0
     steps:
       - checkout:
           path: ~/project
