@@ -45,9 +45,9 @@ jobs:
             packer fmt aws-ubuntu.pkr.hcl
             packer validate aws-ubuntu.pkr.hcl
       - persist_to_workspace:
-          root: .
+          root: ~/
           paths:
-            - .
+            - project
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
