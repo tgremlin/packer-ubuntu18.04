@@ -65,7 +65,10 @@ jobs:
           at: ~/project
       - run:
           name: Build Base
-          command: packer build aws-ubuntu.pkr.hcl
+          command: |
+          pwd
+          ls -a
+          packer build aws-ubuntu.pkr.hcl
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
