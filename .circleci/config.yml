@@ -41,7 +41,7 @@ jobs:
       - run:
           name: Validate Image
           command: |
-            packer init
+            packer init aws-ubuntu.pkr.hcl
             packer fmt aws-ubuntu.pkr.hcl
             packer validate aws-ubuntu.pkr.hcl
       - slack/notify:
