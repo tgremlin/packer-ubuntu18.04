@@ -30,8 +30,9 @@ build {
   ]
   provisioner "shell" {
     inline = [
-      "sudo apt remove unattended-upgrades -y"
+      "sudo apt-get remove unattended-upgrades -y"
     ]
   }
+  post-processor "manifest" {}
 }
 

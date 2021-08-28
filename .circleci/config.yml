@@ -72,7 +72,6 @@ jobs:
           command: |
             packer init aws-ubuntu.pkr.hcl
             packer build aws-ubuntu.pkr.hcl
-            packer output packer-manifest.json
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
