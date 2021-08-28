@@ -33,12 +33,6 @@ jobs:
       - checkout:
           path: ~/project
       - run:
-          name: Run AWS configure
-          command: |
-            aws configure --profile staging set region $AWS_DEFAULT_REGION
-            aws configure --profile staging set access_key $AWS_ACCESS_KEY_ID
-            aws configure --profile staging set secret_key $AWS_SECRET_ACCESS_KEY
-      - run:
           name: Validate Image
           command: |
             packer init aws-ubuntu.pkr.hcl
@@ -61,6 +55,12 @@ jobs:
           path: ~/project
       - attach_workspace:
           at: ~/project
+      - run:
+          name: Run AWS configure
+          command: |
+            aws configure --profile staging set region $AWS_DEFAULT_REGION
+            aws configure --profile staging set access_key $AWS_ACCESS_KEY_ID
+            aws configure --profile staging set secret_key $AWS_SECRET_ACCESS_KEY
       - run:
           name: Build Base
           command: |
