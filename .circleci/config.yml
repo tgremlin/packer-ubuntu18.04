@@ -17,7 +17,6 @@ workflows:
           type: approval
           requires:
             - build-base
-            - slack/on-hold
       - slack/on-hold:
           mentions: $SLACK_MENTION
           requires:
