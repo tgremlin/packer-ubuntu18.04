@@ -43,7 +43,7 @@ jobs:
             packer validate aws-ubuntu.pkr.hcl
       - run:
           name: De-Register existing AMI image
-          command: aws ec2 deregister-image --image-id ami-07df339ad4f528bf6
+          command: aws ec2 deregister-image --image-id ami-07b55f9a902a47162
       - persist_to_workspace:
           root: .
           paths:
@@ -72,6 +72,7 @@ jobs:
           command: |
             packer init aws-ubuntu.pkr.hcl
             packer build aws-ubuntu.pkr.hcl
+            ls -a
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
