@@ -36,11 +36,14 @@ jobs:
       - checkout:
           path: ~/project
       - run:
-          name: Validate Image
+          name: Init and Validate Image
           command: |
             packer init aws-ubuntu.pkr.hcl
             packer fmt aws-ubuntu.pkr.hcl
             packer validate aws-ubuntu.pkr.hcl
+      - run:
+          name: De-Register existing AMI image
+          command: aws ec2 deregister-image --image-id ami-0cc77a21e59868a1a
       - persist_to_workspace:
           root: .
           paths:
