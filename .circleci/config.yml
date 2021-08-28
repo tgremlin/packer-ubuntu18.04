@@ -10,15 +10,16 @@ workflows:
           context:
             - AWS
             - Slack
+      - slack/on-hold:
+          mentions: $SLACK_MENTION
+          requires:
+            - validate
       - hold-build-base:
           context: Slack
           type: approval
           requires:
             - validate
-      - slack/on-hold:
-          mentions: $SLACK_MENTION
-          requires:
-            - hold-build-base
+            - slack/on-hold
       - build-base:
           context:
             - AWS
