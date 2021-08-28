@@ -17,8 +17,8 @@ jobs:
       -run:
         name: Validate Image
         command: | 
-        packer validate aws-ubuntu.pkr.hcl
-        packer fmt aws-ubuntu.pkr.hcl
+          packer fmt aws-ubuntu.pkr.hcl        
+          packer validate aws-ubuntu.pkr.hcl
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
