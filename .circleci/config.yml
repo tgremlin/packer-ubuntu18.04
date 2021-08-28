@@ -72,8 +72,7 @@ jobs:
           command: |
             packer init aws-ubuntu.pkr.hcl
             packer build aws-ubuntu.pkr.hcl
-            git add packer-manifest.json
-            git commit -a -m "skip ci - Saving packer manifest"
+            
       - slack/notify:
           event: fail
           mentions: $SLACK_MENTION
