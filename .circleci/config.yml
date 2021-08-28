@@ -1,0 +1,65 @@
+version: 2.1
+orbs:
+  slack: circleci/slack@4.4.4
+jobs:
+  validate:
+    working_directory: ~/project
+    docker:
+      - image: hashicorp/packer:light
+    steps:
+      - checkout
+      - run:
+          name: run AWS configure
+          command: |
+            aws configure --profile staging set region $AWS_DEFAULT_REGION
+            aws configure --profile staging set access_key $AWS_ACCESS_KEY_ID
+            aws configure --profile staging set secret_key $AWS_SECRET_ACCESS_KEY
+      -run:
+        name: Validate Image
+        command: | 
+        packer validate aws-ubuntu.pkr.hcl
+        packer fmt aws-ubuntu.pkr.hcl
+      - slack/notify:
+          event: fail
+          mentions: $SLACK_MENTION
+          template: basic_fail_1
+  build-base:
+    working_directory: ~/project
+    docker:
+      - image: hashicorp/packer:light
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Build Base
+          command: packer build aws-ubuntu.pkr.hcl
+      - slack/notify:
+          event: pass
+          mentions: $SLACK_MENTION
+          template: basic_success_1
+      - slack/notify:
+          event: fail
+          mentions: $SLACK_MENTION
+          template: basic_fail_1
+
+workflows:
+  build:
+    jobs:
+      - validate:
+          context:
+            - AWS
+            - Slack
+      - build-base:
+          context: Slack
+      - slack/on-hold:
+          mentions: $SLACK_MENTION
+          requires:
+            - hold-build-base
+      - hold-build-base:
+          context: Slack
+          type: approval
+          requires:
+            - build-base
+            - slack/on-hold
+
